@@ -13,7 +13,7 @@
         comment: PaaS access
         group: www-data
 
-    - name: Creates directory
+    - name: Creates-directory
       ansible.builtin.shell: |
         home_dir="/home/piku"
         user="piku"
