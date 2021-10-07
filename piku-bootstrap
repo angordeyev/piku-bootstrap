@@ -41,7 +41,7 @@ main() {
   # ensure we have the piku repo checked out
   if [ ! -d "${REPO}" ]; then
     echo " #> Piku Bootstrap repo not found. Installing it into ${REPO}."
-    git clone https://github.com/piku/piku-bootstrap "${REPO}"
+    git clone https://github.com/angordeyev/piku-bootstrap "${REPO}"
   fi
 
   if [ "$1" = "" ]
