@@ -14,7 +14,7 @@
         group: www-data
 
     - name: Creates-directory
-      ansible.builtin.shell: |
+      shell: |
         home_dir="/home/piku"
         user="piku"
         group="www-data"
