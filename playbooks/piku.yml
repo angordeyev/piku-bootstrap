@@ -6,28 +6,15 @@
     user: "{{ piku_user | default('piku', true)}}"
     ssh_user: "{{ lookup('env', 'SUDO_USER') | default('root') }}"
   tasks:
-    - name: Add piku user
-      user:
-        name: "{{ user }}"
-        password: !
-        comment: PaaS access
-        group: www-data
-
-    - name: Creates-directory
+    - name: Add piku user and Creates-directory
       shell: |
         home_dir="/home/piku"
         user="piku"
         group="www-data"
         ssh_user="root"
-        install -d -m 0777 -o $user -g $group ${home_dir} # create directory with permissions
-
-    - name: Copy authorized_keys from root
-      copy:
-        src: "~{{ssh_user}}/.ssh/authorized_keys"
-        dest: "/tmp/root_authorized_keys"
-        mode: 0600
-        owner: "{{user}}"
-        group: www-data
+        id -u ${user} &>/dev/null || useradd -g "${group}" "${user}" # add piku user if does not exist
+        install -m 0700 -o "${user}" -g "${group}" -d "${home_dir}" # create directory with permissions
+        install -m 0600 -o "${user}" -g "${group}" "$(realpath ~root)/.ssh/authorized_keys" "/tmp/root_authorized_keys" # Copy authorized_keys from root
 
     - name: Install Debian Packages
       apt:
