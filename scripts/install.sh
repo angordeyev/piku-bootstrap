@@ -23,7 +23,7 @@ test -f /usr/local/bin/uwsgi-piku || ln -s $(which uwsgi) /usr/local/bin/uwsgi-p
 # Install uwsgi dist script
 test -f /etc/init.d/uwsgi-piku ||
   curl https://raw.githubusercontent.com/piku/piku/master/uwsgi-piku.dist -o /etc/init.d/uwsgi-piku &&
-  chmod 0700
+  chmod 0700 /etc/init.d/uwsgi-piku
 
 # Install uwsgi-piku dist script
 test -f /etc/rc2.d/S01uwsgi-piku || update-rc.d uwsgi-piku defaults
@@ -31,4 +31,4 @@ test -f /etc/rc2.d/S01uwsgi-piku || update-rc.d uwsgi-piku defaults
 # Install uwsgi-piku systemd script
 test -f /etc/systemd/system/uwsgi-piku.service ||
   curl https://raw.githubusercontent.com/piku/piku/master/uwsgi-piku.service -o /etc/systemd/system/uwsgi-piku.service &&
-  chmod 0600
+  chmod 0600 /etc/systemd/system/uwsgi-piku.service
