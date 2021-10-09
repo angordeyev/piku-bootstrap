@@ -6,7 +6,7 @@ group="www-data"
 ssh_user="root"
 
 # add piku user if does not exist
-id -u ${user} &>/dev/null || useradd -g "${group}" "${user}" 
+id -u ${user} >/dev/null 2>&1 || useradd -g "${group}" "${user}"
 
 # create directory with permissions
 install -m 0700 -o "${user}" -g "${group}" -d "${home_dir}" 
