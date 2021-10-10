@@ -32,9 +32,6 @@ main() {
   # check git dependency
   command -v git > /dev/null || apt install -y git
 
-  # check if ansible is installed
-  command -v ansible > /dev/null || apt install -y ansible
-
   # ensure we have a dir
   mkdir -p "${PBD}"
 
@@ -105,7 +102,6 @@ main() {
             playbook="${builtin}"
           fi
           ./.piku-bootstrap/piku-bootstrap/scripts/install.sh
-          ansible-playbook --connection=local -i "127.0.0.1", "${playbook}" -e 'ansible_python_interpreter=/usr/bin/python3' "$@" --extra-vars "piku_user=$PIKU_USER"
         else
           echo "${playbook} is not a valid playbook name."
         fi
