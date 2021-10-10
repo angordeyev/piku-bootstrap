@@ -13,7 +13,6 @@ PBD=${PIKU_BOOTSTRAP_DIR:-~/.piku-bootstrap}
 VENV="${PBD}/virtualenv"
 REPO="${PBD}/piku-bootstrap"
 VIRTUALENV_VERSION="20.0.0"
-ANSIBLE_VERSION="3.3.0"
 LOG="${PBD}/install.log"
 
 main() {
@@ -25,12 +24,6 @@ main() {
     read discarded
     echo
   fi
-
-  # check python dependency
-  command -v python3 > /dev/null || apt install -y python3
-
-  # check git dependency
-  command -v git > /dev/null || apt install -y git
 
   # ensure we have a dir
   mkdir -p "${PBD}"
@@ -45,18 +38,7 @@ main() {
   then
     echo
     echo "Usage:"
-    echo "       `basename $0` install [PLAYBOOK] [ANSIBLE_ARGS...]"
-    echo "       `basename $0` list-playbooks"
-    echo "       `basename $0` update"
-    echo
-    echo " PLAYBOOK  Optional playbook to deploy on to the server."
-    echo "           For example 'nodeenv.yml' installs nodeenv."
-    echo "           Can be an absolute path to your own playbook."
-    echo
-    echo " list-playbooks"
-    echo "          List available built-in playbooks."
-    echo
-    echo " update   Pull the piku-bootstrap repo to get the latest playbooks."
+    echo "       `basename $0` install"
     echo
     echo "Notes:"
     echo
@@ -69,11 +51,6 @@ main() {
     echo
   else
     case "$1" in
-      update)
-        echo "Updating piku-bootstrap repo."
-        cd "${REPO}"
-        git pull
-        ;;
       first-run)
         echo
         echo " #> Success!"
@@ -83,28 +60,8 @@ main() {
         echo "To install Piku on this server for the first time run './piku-bootstrap install'."
         echo ""
         ;;
-      list-playbooks)
-        ls "${REPO}/playbooks"
-        ;;
       install)
-        shift
-        if [ ! "$1" = "" -a -z "${1##*.yml*}" ];
-        then
-          playbook="$1"; shift;
-        else
-          playbook="piku.yml"
-        fi
-        if [ -z "${playbook##*.yml*}" ]; then
-          echo "Bootstrapping piku onto `hostname`"
-          builtin="${REPO}/playbooks/${playbook}"
-          if [ ! -f "${playbook}" -a -f "${builtin}" ]; then
-            echo "Using built-in playbook: ${playbook}"
-            playbook="${builtin}"
-          fi
-          ./.piku-bootstrap/piku-bootstrap/scripts/install.sh
-        else
-          echo "${playbook} is not a valid playbook name."
-        fi
+        ./.piku-bootstrap/piku-bootstrap/scripts/install.sh
         ;;
     esac
   fi
