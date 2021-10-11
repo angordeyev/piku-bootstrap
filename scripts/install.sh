@@ -52,10 +52,8 @@ su piku <<"EOF"
   # Delete root authorized keys file
   rm /tmp/root_authorized_keys
 
-  #  acme.sh
+  #  Install acme.sh and configure it to autoupgrade
   curl https://get.acme.sh | sh
-
-  # Configure acme.sh to auto-upgrade
   sed -i 's/AUTO_UPGRADE.*/AUTO_UPGRADE=1/' ~/.acme.sh/account.conf
 EOF
 
