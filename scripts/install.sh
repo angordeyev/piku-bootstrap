@@ -44,7 +44,8 @@ su - piku <<"EOF"
 
   # Ask piku to use SSH keys
   [ -f ~/.ssh/authorized_keys ] ||
-  for line in $(cat /tmp/root_authorized_keys)
+
+  cat /tmp/root_authorized_keys | while read line
   do
     echo ${line} > /tmp/id_rsa.pub && ~/piku.py setup:ssh /tmp/id_rsa.pub && rm /tmp/id_rsa.pub
   done
