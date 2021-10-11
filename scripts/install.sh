@@ -9,10 +9,10 @@ ssh_user="root"
 id -u ${user} >/dev/null 2>&1 || useradd -g "${group}" "${user}"
 
 # create directory with permissions
-install -m 0700 -o "${user}" -g "${group}" -d "${home_dir}" 
+install -m 0700 -o "${user}" -g "${group}" -d "${home_dir}"
 
 # Copy authorized_keys from root
-install -m 0600 -o "${user}" -g "${group}" "$(realpath ~root)/.ssh/authorized_keys" "/tmp/root_authorized_keys" 
+install -m 0600 -o "${user}" -g "${group}" "$(realpath ~root)/.ssh/authorized_keys" "/tmp/root_authorized_keys"
 
 # Install packages
 apt install bc git build-essential libpcre3-dev zlib1g-dev python python3 python3-pip python3-click python3-dev python3-virtualenv python3-setuptools nginx incron acl uwsgi-core uwsgi-plugin-python3 nodeenv
@@ -46,7 +46,7 @@ su - piku <<"EOF"
   [ -f ~/.ssh/authorized_keys ] ||
   for line in $(cat /tmp/root_authorized_keys)
   do
-    line > /tmp/id_rsa.pub && python3 ~/piku.py setup:ssh /tmp/id_rsa.pub && rm /tmp/id_rsa.pub
+    ${line} > /tmp/id_rsa.pub && ~/piku.py setup:ssh /tmp/id_rsa.pub && rm /tmp/id_rsa.pub
   done
 
   # Delete root authorized keys file
