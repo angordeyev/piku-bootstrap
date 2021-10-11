@@ -52,34 +52,20 @@ su piku <<"EOF"
   # Delete root authorized keys file
   rm /tmp/root_authorized_keys
 
-  # Download acme.sh
-  (source=https://raw.githubusercontent.com/Neilpang/acme.sh/6ff3f5d/acme.sh
-  dest=~/acme.sh
-  [ -f ${dest} ] || curl ${source} -o ${dest} && chmod 0755 ${dest})
-
-  # Execute acme.sh installer
-  [ -f ~/.acme.sh/acme.sh ] || cd ~/ && ./acme.sh --install
-
-  # Remove acme.sh installer
-  rm ~/acme.sh
+  #  acme.sh
+  curl https://get.acme.sh | sh
 
   # Configure acme.sh to auto-upgrade
   sed -i 's/AUTO_UPGRADE.*/AUTO_UPGRADE=1/' ~/.acme.sh/account.conf
 EOF
 
-# Enable uwsgi-piku service
-systemctl enable uwsgi-piku
+# Enable and start uwsgi-piku service
+systemctl enable --now uwsgi-piku
 
-# Start uwsgi init script
-systemctl start uwsgi-piku
-
-# Get nginx default config
+# Get nginx default config and restart nginx
 curl https://raw.githubusercontent.com/piku/piku/master/nginx.default.dist > /etc/nginx/sites-available/default
-
-# Restart nginx service
 systemctl restart nginx
 
+# Get incron config an restart incron service
 curl https://raw.githubusercontent.com/piku/piku/master/incron.dist > /etc/incron.d/piku
-
-# Restart incron service
 systemctl restart incron
