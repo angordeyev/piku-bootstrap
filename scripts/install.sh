@@ -46,7 +46,7 @@ su - piku <<"EOF"
   [ -f ~/.ssh/authorized_keys ] ||
   for line in $(cat /tmp/root_authorized_keys)
   do
-    ${line} > /tmp/id_rsa.pub && ~/piku.py setup:ssh /tmp/id_rsa.pub && rm /tmp/id_rsa.pub
+    echo ${line} > /tmp/id_rsa.pub && ~/piku.py setup:ssh /tmp/id_rsa.pub && rm /tmp/id_rsa.pub
   done
 
   # Delete root authorized keys file
