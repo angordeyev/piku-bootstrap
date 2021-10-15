@@ -38,7 +38,7 @@ su - piku <<"EOF"
   dest=~/piku.py
   [ -f ${dest} ] || curl ${source} -o ${dest} && chmod 0700 ${dest}
 
-  #Run piku setup
+  # Run piku setup
   [ -f ~/.piku ] || python3 ~/piku.py setup
 
   # Ask piku to use SSH keys
