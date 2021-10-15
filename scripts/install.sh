@@ -4,10 +4,10 @@ home_dir="/home/piku"
 user="piku"
 group="www-data"
 
-# add piku user if does not exist
+# Add piku user if does not exist
 id -u ${user} >/dev/null 2>&1 || useradd -g "${group}" "${user}"
 
-# create directory with permissions
+# Create directory with permissions
 install -m 0700 -o "${user}" -g "${group}" -d "${home_dir}"
 
 # Copy authorized_keys from root
