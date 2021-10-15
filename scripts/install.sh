@@ -3,7 +3,6 @@
 home_dir="/home/piku"
 user="piku"
 group="www-data"
-ssh_user="root"
 
 # add piku user if does not exist
 id -u ${user} >/dev/null 2>&1 || useradd -g "${group}" "${user}"
@@ -44,18 +43,15 @@ su - piku <<"EOF"
 
   # Ask piku to use SSH keys
   [ -f ~/.ssh/authorized_keys ] ||
-
   cat /tmp/root_authorized_keys | while read line
   do
     echo ${line} > /tmp/id_rsa.pub && ~/piku.py setup:ssh /tmp/id_rsa.pub && rm /tmp/id_rsa.pub
   done
-
-  # Delete root authorized keys file
   rm /tmp/root_authorized_keys
 
-  #  Install acme.sh and configure it to autoupgrade
-  curl https://get.acme.sh | sh
-  sed -i 's/AUTO_UPGRADE.*/AUTO_UPGRADE=1/' ~/.acme.sh/account.conf
+  # Install acme.sh, change acme.sh CA to Let's Encrypt and enable automatic upgrades
+  curl https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh | sh -s -- --install-online
+  ~/.acme.sh/acme.sh --set-default-ca --server letsencrypt --auto-upgrade
 EOF
 
 # Enable and start uwsgi-piku service
