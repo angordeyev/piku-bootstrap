@@ -14,6 +14,7 @@ install -m 0700 -o "${user}" -g "${group}" -d "${home_dir}"
 install -m 0600 -o "${user}" -g "${group}" "$(realpath ~root)/.ssh/authorized_keys" "/tmp/root_authorized_keys"
 
 # Install packages
+apt update
 apt install bc git build-essential libpcre3-dev zlib1g-dev python python3 python3-pip python3-click python3-dev python3-virtualenv python3-setuptools nginx incron acl uwsgi-core uwsgi-plugin-python3 nodeenv
 
 # Create uwgsi symlink
@@ -50,7 +51,7 @@ su - piku <<"EOF"
   rm /tmp/root_authorized_keys
 
   # Install acme.sh, change acme.sh CA to Let's Encrypt and enable automatic upgrades
-  curl https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh | sh -s -- --install-online
+  curl https://get.acme.sh | sh
   ~/.acme.sh/acme.sh --set-default-ca --server letsencrypt --auto-upgrade
 EOF
 
