@@ -35,7 +35,7 @@ dest=/etc/systemd/system/uwsgi-piku.service
 
 su - piku <<"EOF"
   # Fetch piku.py script
-  source=https://raw.githubusercontent.com/piku/piku/master/piku.py
+  source=https://raw.githubusercontent.com/angordeyev/piku/master/piku.py
   dest=~/piku.py
   [ -f ${dest} ] || curl ${source} -o ${dest} && chmod 0700 ${dest}
 
