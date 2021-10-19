@@ -7,16 +7,7 @@ The easiest way to get started is using the get script:
 
 ```
 ssh root@YOUR-FRESH-UBUNTU-SERVER
-curl https://piku.github.io/get | sh
-```
-
-Or you can do the steps manually yourself:
-
-```
-ssh root@YOUR-FRESH-UBUNTU-SERVER
-curl -s https://raw.githubusercontent.com/angordeyev/piku-bootstrap/master/piku-bootstrap > piku-bootstrap
-chmod 755 piku-bootstrap
-./piku-bootstrap first-run
+curl https://raw.githubusercontent.com/angordeyev/piku-bootstrap/master/install.sh | sh
 ```
 
 **Warning**: Please use a fresh Ubuntu server as this script will modify system level settings.
